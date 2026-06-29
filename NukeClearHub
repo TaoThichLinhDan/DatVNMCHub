@@ -1,0 +1,29 @@
+-- Giả sử vật phẩm là một Folder chứa thông tin (Value)
+local function tryMerge(item1, item2)
+    -- Kiểm tra nếu 2 vật phẩm cùng loại và cùng cấp độ
+    if item1.Name == item2.Name and item1.Level.Value == item2.Level.Value then
+        
+        -- Tiến hành hợp nhất
+        local newLevel = item1.Level.Value + 1
+        item1.Level.Value = newLevel
+        
+        -- Hiệu ứng nâng cấp (giả sử có hàm updateVisuals)
+        updateVisuals(item1, newLevel)
+        
+        -- Hủy vật phẩm thứ 2 (đã được merge vào)
+        item2:Destroy()
+        
+        print("Đã nâng cấp lên cấp: " .. newLevel)
+        return true
+    end
+    return false
+end
+
+-- Hàm tăng tốc độ sản xuất/nâng cấp (Upgrade Speed)
+local function upgradeSpeed(bombObject, multiplier)
+    local currentSpeed = bombObject:FindFirstChild("ProductionSpeed")
+    if currentSpeed then
+        currentSpeed.Value = currentSpeed.Value * multiplier
+        print("Tốc độ sản xuất đã tăng lên: " .. currentSpeed.Value)
+    end
+end
